@@ -14,7 +14,7 @@ public class Main {
         
     // }
     String[] words = updatedString.split(" +");
-    System.out.println("*** Array Count ***");
+    //System.out.println("*** Array Count ***");
 
     //System.out.println(words);
 
@@ -29,24 +29,59 @@ public class Main {
         //System.out.println(w);
     }
 
-    System.out.println("***Turning Words into HashMap***");
+    //System.out.println("***Turning Words into HashMap***");
     HashMap<String, Integer> wordsHashMap = new HashMap<String, Integer>(); 
 
     int hashcount = 0; 
     for(String s : wordsArrayList) {
+        
+        if(wordsHashMap.containsKey(s)) {
+            int currentCount = wordsHashMap.get(s); 
+            wordsHashMap.put(s, ++currentCount);
 
-        wordsHashMap.put(hashcount, s);
-        hashcount++; 
-        System.out.println(s);
+        } else {
+
+            wordsHashMap.put(s, 1); 
+        }
+ 
+        //System.out.println(s);
     }
     //System.out.println(wordsHashMap);
 
-    for(Integer i: wordsHashMap.keySet()) {
+    for(String i: wordsHashMap.keySet()) {
 
         //System.out.println("key: " + i + " frequency: " + wordsHashMap.get(i));
     }
-    //System.out.println(wordsHashMap.get(5));
 
+    ArrayList<HashMap.Entry<String, Integer>> sortedMap = new ArrayList<HashMap.Entry<String, Integer>>(); 
+    sortedMap.addAll(wordsHashMap.entrySet()); 
+
+    Collections.sort(sortedMap, new Comparator<HashMap.Entry<String, Integer>>(){
+
+        public int compare(HashMap.Entry<String, Integer> o1, HashMap.Entry<String, Integer> o2 ) {
+
+            return o2.getValue() - o1.getValue();
+
+            // for(int i = 0; i < 50; i++) {
+
+            // }
+              
+             
+            //return o2.getValue().getAvgWeight() - o1.getValue().getAvgWeight(); 
+        }
+    }); 
+    
+    //System.out.println(sortedMap);
+    System.out.println();
+    System.out.println("*** Top 50 ***");
+    int count = 0; 
+    for(HashMap.Entry<String, Integer> w : sortedMap ) {
+        if(count < 50 ) {
+    
+            System.out.println("word: " + w.getKey()+ " Frequency: " + w.getValue());
+            count++; 
+        } 
+    }
 
     //System.out.println(updatedString);
 
